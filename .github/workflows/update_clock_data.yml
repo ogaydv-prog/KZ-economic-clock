@@ -2,9 +2,8 @@ name: Update Kazakhstan Economic Clock
 
 on:
   schedule:
-    - cron: '0 5 * * 1' # Каждый понедельник в 10:00 по Астане (05:00 UTC)
-  workflow_dispatch: allow manual run
-
+    - cron: '0 5 * * 1'
+  workflow_dispatch:
 jobs:
   update-data:
     runs-on: ubuntu-latest
