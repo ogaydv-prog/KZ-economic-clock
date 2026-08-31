@@ -38,11 +38,18 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         
-        /* Bright Sub-blocks under Sliders */
+        /* Выпуклые сероватые 3D-карточки (Инфляция, Безработица, Ставка НБРК) */
+        .raised-card-3d {
+            background: linear-gradient(145deg, #222c3d, #171e2b) !important;
+            box-shadow: 6px 6px 15px #04060a, -4px -4px 12px #2b384e !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        }
+
+        /* Выпуклые сероватые плашки под слайдерами */
         .raised-subblock-bright {
-            background: linear-gradient(145deg, #253042, #1a2230);
-            box-shadow: 4px 4px 10px #06080e, -3px -3px 8px #2c3a50;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: linear-gradient(145deg, #2a3548, #1c2432) !important;
+            box-shadow: 5px 5px 12px #04060a, -4px -4px 10px #324158 !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
         }
 
         /* Gold Gradient Header Text */
@@ -208,13 +215,13 @@
 
         </div>
 
-        <!-- MIDDLE ROW: 3 FLIP CARDS -->
+        <!-- MIDDLE ROW: 3 FLIP CARDS WITH 3D NEUMORPHIC STYLE -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-36">
             
             <!-- Inflation -->
             <div class="flip-card h-full" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-rose-500 shadow-2xl">
+                    <div class="flip-card-front raised-card-3d p-4 flex flex-col justify-between border-l-4 border-rose-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
                                 <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Inflation Rate (YoY)</span>
@@ -224,7 +231,7 @@
                         </div>
                         <div class="text-[10px] text-gray-400 font-medium">Bureau of National Statistics RK</div>
                     </div>
-                    <div class="flip-card-back raised-card p-4 flex flex-col justify-between border-l-4 border-rose-400 bg-[#1a131d]">
+                    <div class="flip-card-back raised-card-3d p-4 flex flex-col justify-between border-l-4 border-rose-400 bg-[#1a131d]">
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-rose-400 block mb-1">Inflation Breakdown</span>
                             <div class="space-y-1 text-xs">
@@ -241,7 +248,7 @@
             <!-- Unemployment -->
             <div class="flip-card h-full" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-amber-500 shadow-2xl">
+                    <div class="flip-card-front raised-card-3d p-4 flex flex-col justify-between border-l-4 border-amber-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
                                 <span class="text-xs font-bold uppercase tracking-wider text-amber-500">Unemployment Rate (ILO)</span>
@@ -251,7 +258,7 @@
                         </div>
                         <div class="text-[10px] text-gray-400 font-medium">Employed: <span id="employed-count">9,410,000</span> people</div>
                     </div>
-                    <div class="flip-card-back raised-card p-4 flex flex-col justify-between border-l-4 border-amber-400 bg-[#1d1912]">
+                    <div class="flip-card-back raised-card-3d p-4 flex flex-col justify-between border-l-4 border-amber-400 bg-[#1d1912]">
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">Labor Market Summary</span>
                             <div class="space-y-1 text-xs">
@@ -268,7 +275,7 @@
             <!-- Policy Rate & Exchange Rate -->
             <div class="flip-card h-full" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-emerald-500 shadow-2xl">
+                    <div class="flip-card-front raised-card-3d p-4 flex flex-col justify-between border-l-4 border-emerald-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
                                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">NBRK Base Rate</span>
@@ -278,7 +285,7 @@
                         </div>
                         <div class="text-[10px] text-gray-400 font-medium">Interest Rate Corridor: +/- 1.00%</div>
                     </div>
-                    <div class="flip-card-back raised-card p-4 flex flex-col justify-between border-l-4 border-emerald-400 bg-[#111c16]">
+                    <div class="flip-card-back raised-card-3d p-4 flex flex-col justify-between border-l-4 border-emerald-400 bg-[#111c16]">
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">NBRK Indicators</span>
                             <div class="space-y-1 text-xs">
