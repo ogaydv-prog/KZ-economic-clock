@@ -457,10 +457,9 @@
         }
 
         // --- ДИНАМИЧЕСКИЙ АЛГОРИТМ WORLDOMETER ---
-        const baseDate = new Date("2026-07-01T00:00:00+05:00").getTime();
-        const basePopulation = 20590589;
-        const popGrowthPerSecond = 0.0082441;
-
+const startDate = new Date("2026-09-01T00:00:00+05:00").getTime();
+const basePopulation = 20604819;
+const secondsPerPerson = 376.44;
         function getRealtimePopulation() {
             const now = new Date().getTime();
             const secondsElapsed = (now - baseDate) / 1000;
