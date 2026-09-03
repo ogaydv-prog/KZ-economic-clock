@@ -65,8 +65,7 @@
 
     <div class="w-full kaz-ornament-header shadow-lg shadow-cyan-950/30"></div>
 
-    <!-- ШАПКА: ЗАГОЛОВОК СТРОГО ПО ЦЕНТРУ С ЗОЛОТИСТЫМ ГРАДИЕНТОМ -->
- <!-- ШАПКА С ПЕРЕКЛЮЧАТЕЛЕМ ЯЗЫКА -->
+    <!-- ШАПКА С ПЕРЕКЛЮЧАТЕЛЕМ ЯЗЫКА -->
     <header class="border-b border-gray-800 bg-[#0d1117]/90 backdrop-blur sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="w-20"></div> <!-- Разделитель для центрирования заголовка -->
@@ -140,7 +139,7 @@
             <div class="raised-card rounded-xl p-5 flex flex-col justify-between items-center w-full">
                 <div class="text-center w-full">
                     <span class="text-xs text-yellow-400 uppercase font-bold tracking-wider">Численность населения (Real-Time)</span>
-                    <div class="text-xl ticker-font text-white mt-0.5"><span id="pop-main-ticker">20 590 589</span></div>
+                    <div class="text-xl ticker-font text-white mt-0.5"><span id="pop-main-ticker">20 604 819</span></div>
                 </div>
                 
                 <svg id="svg-pop" viewBox="0 0 200 135" class="w-full max-h-[190px] my-1">
@@ -150,7 +149,7 @@
                     <g id="ticks-pop"></g>
                     <g id="lbl-group-pop">
                         <text id="lbl-country-pop" font-size="8" font-weight="800" text-anchor="middle" fill="#ffffff">КАЗАХСТАН</text>
-                        <text id="lbl-val-pop" font-size="6.5" text-anchor="middle" fill="#ffd200" font-weight="700">20.59 млн</text>
+                        <text id="lbl-val-pop" font-size="6.5" text-anchor="middle" fill="#ffd200" font-weight="700">20.60 млн</text>
                     </g>
 
                     <circle id="pin-pop" cx="100" cy="105" r="5" fill="#121620" stroke="#3892e3" stroke-width="1.5" />
@@ -410,7 +409,7 @@
         const dataPop = [
             {c:"Исландия", v:"0.38 млн"}, {c:"Эстония", v:"1.33 млн"}, {c:"Литва", v:"2.8 млн"}, {c:"Грузия", v:"3.7 млн"}, {c:"Хорватия", v:"3.8 млн"}, 
             {c:"Новая Зеландия", v:"5.2 млн"}, {c:"Финляндия", v:"5.5 млн"}, {c:"Сингапур", v:"5.6 млн"}, {c:"Швейцария", v:"8.8 млн"}, {c:"ОАЭ", v:"9.4 млн"}, 
-            {c:"Швеция", v:"10.5 млн"}, {c:"Чили", v:"19.9 млн"}, {c:"КАЗАХСТАН", v:"20.59 млн"}, {c:"Австралия", v:"26.5 млн"}, {c:"Малайзия", v:"34.3 млн"}, 
+            {c:"Швеция", v:"10.5 млн"}, {c:"Чили", v:"19.9 млн"}, {c:"КАЗАХСТАН", v:"20.60 млн"}, {c:"Австралия", v:"26.5 млн"}, {c:"Малайзия", v:"34.3 млн"}, 
             {c:"Канада", v:"40.5 млн"}, {c:"Аргентина", v:"46.6 млн"}, {c:"Южная Корея", v:"51.5 млн"}, {c:"Колумбия", v:"52.0 млн"}, {c:"Италия", v:"58.8 млн"}, 
             {c:"Великобритания", v:"68.3 млн"}, {c:"Франция", v:"68.4 млн"}, {c:"Германия", v:"84.4 млн"}, {c:"Египет", v:"114.5 млн"}, {c:"Япония", v:"123.0 млн"}, 
             {c:"Бразилия", v:"217.0 млн"}, {c:"Индонезия", v:"279.0 млн"}, {c:"США", v:"341.0 млн"}, {c:"Китай", v:"1.41 млрд"}, {c:"Индия", v:"1.44 млрд"}, 
@@ -456,14 +455,15 @@
             return { x: 100 + radius * Math.cos(rad), y: 105 - radius * Math.sin(rad) };
         }
 
-        // --- ДИНАМИЧЕСКИЙ АЛГОРИТМ WORLDOMETER ---
-const startDate = new Date("2026-09-01T00:00:00+05:00").getTime();
-const basePopulation = 20604819;
-const secondsPerPerson = 376.44;
+        // --- ДИНАМИЧЕСКИЙ АЛГОРИТМ НАСЕЛЕНИЯ (ОБНОВЛЕНО НА 01.09.2026) ---
+        const BASE_DATE = new Date("2026-09-01T00:00:00+05:00").getTime();
+        const BASE_POPULATION = 20604819; // Официальные данные Нацбюро на 01.09.2026
+        const SECONDS_PER_CAPITA = 376.44; // Динамика прироста (+1 чел за 376.44 сек)
+
         function getRealtimePopulation() {
             const now = new Date().getTime();
-            const secondsElapsed = (now - baseDate) / 1000;
-            return basePopulation + (secondsElapsed * popGrowthPerSecond);
+            const elapsedSeconds = (now - BASE_DATE) / 1000;
+            return elapsedSeconds >= 0 ? BASE_POPULATION + (elapsedSeconds / SECONDS_PER_CAPITA) : BASE_POPULATION;
         }
 
         function initGauge(id, data, kazIndex) {
@@ -643,7 +643,7 @@ const secondsPerPerson = 376.44;
         const eduSpeedKzt = 26226.69;  
         const defSpeedKzt = 41564.34;  
 
-        // Функция автозагрузки свежих данных из data.json (генерируемого через GitHub Actions)
+        // Функция автозагрузки свежих данных из data.json
         async function fetchLiveEconomicData() {
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
