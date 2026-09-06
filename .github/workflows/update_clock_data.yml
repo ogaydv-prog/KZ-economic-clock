@@ -2,8 +2,8 @@ name: Weekly Economic Clock Update
 
 on:
   schedule:
-    # 05:00 UTC = 06:00 AM по Астане каждый понедельник
-    - cron: '0 5 * * 1'
+    # 01:00 UTC = 06:00 AM по времени Астаны/Алматы (UTC+5) каждый понедельник
+    - cron: '0 1 * * 1'
   workflow_dispatch: # Позволяет запустить обновление вручную из интерфейса GitHub
 
 jobs:
@@ -26,4 +26,4 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add data.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update: data.json [Monday 10:00 ALMT]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update: data.json [Monday 06:00 ALMT]" && git push)
