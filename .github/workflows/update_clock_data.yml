@@ -2,7 +2,7 @@ name: Weekly Economic Clock Update
 
 on:
   schedule:
-    # 05:00 UTC = 10:00 AM по Астане каждый понедельник
+    # 05:00 UTC = 06:00 AM по Астане каждый понедельник
     - cron: '0 5 * * 1'
   workflow_dispatch: # Позволяет запустить обновление вручную из интерфейса GitHub
 
