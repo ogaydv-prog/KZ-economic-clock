@@ -1,17 +1,14 @@
 {
-  "usd_kzt": "454.00",
-  "base_rate": "15.75",
-  "tonia_rate": "14.75%",
-  "inflation_main": "9.30",
-  "inflation_food": "8.6%",
-  "inflation_nonfood": "8.9%",
-  "inflation_services": "10.4%",
-  "gdp_growth": "4.60",
-  "gdp_start_kzt": "122478915000000.00",
+  "usd_kzt": "453.87",
+  "base_rate": "16.25",
+  "tonia_rate": "16.06",
+  "inflation_target": "5.00",
+  "inflation_main": "9.8",
+  "inflation_food": "9.5",
+  "inflation_nonfood": "11.4",
+  "inflation_services": "8.7",
   "unemployment_rate": "4.70",
   "employed_count": "9410000",
   "unemployed_count": "461000",
-  "youth_unemployment": "3.1%",
-  "current_account_gdp": "+0.8%",
-  "budget_deficit_gdp": "3.1%"
+  "youth_unemployment": "3.1%"
 }
