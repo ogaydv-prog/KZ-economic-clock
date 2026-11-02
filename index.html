@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Kazakhstan Economic Clock | Dark Neumorphic Hub</title>
+    <title id="page-title">The Kazakhstan Economic Clock | Dark Neumorphic Hub</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -32,21 +32,18 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Выпуклые 3D-карточки (Deep Neumorphism Dark) */
         .raised-card {
             background: linear-gradient(145deg, #151b26, #0e121a);
             box-shadow: 8px 8px 18px #04060a, -5px -5px 12px #1c2434;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         
-        /* Светлые выпуклые кнопки под слайдерами */
         .raised-subblock-bright {
             background: linear-gradient(145deg, #253042, #1a2230);
             box-shadow: 4px 4px 10px #06080e, -3px -3px 8px #2c3a50;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Градиентный заголовок */
         .gold-gradient-text {
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
             -webkit-background-clip: text;
@@ -54,7 +51,7 @@
             filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.2));
         }
 
-        /* Переворачивающиеся карточки (Flip Cards) */
+        /* Flip Cards */
         .flip-card { perspective: 1000px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: left; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
@@ -64,10 +61,10 @@
 </head>
 <body class="min-h-screen pb-12">
 
-    <!-- ЛЕНТА С ОРНАМЕНТОМ (АДАПТИВНАЯ) -->
+    <!-- ЛЕНТА С ОРНАМЕНТОМ -->
     <div class="w-full kaz-ornament-header shadow-lg shadow-cyan-950/30"></div>
 
-    <!-- АДАПТИВНАЯ ШАПКА С ПЕРЕКЛЮЧАТЕЛЕМ ЯЗЫКА -->
+    <!-- АДАПТИВНАЯ ШАПКА -->
     <header class="border-b border-gray-800 bg-[#0d1117]/90 backdrop-blur sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
             
@@ -77,12 +74,12 @@
                 <span class="text-white font-bold">ECONOMIC CLOCK</span>
             </h1>
 
-            <!-- Переключатель языков -->
+            <!-- ИНТЕРАКТИВНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
             <div class="flex items-center gap-2 text-xs font-bold bg-[#161f2e] px-3.5 py-1.5 rounded-lg border border-gray-700 shadow-inner">
                 <span class="text-gray-400">🌐</span>
-                <span class="text-amber-400">RU</span>
+                <button id="btn-lang-ru" onclick="switchLanguage('ru')" class="transition focus:outline-none">RU</button>
                 <span class="text-gray-600">|</span>
-                <a href="/KZ-economic-clock/index-en.html" class="text-gray-400 hover:text-white transition">EN</a>
+                <button id="btn-lang-en" onclick="switchLanguage('en')" class="transition focus:outline-none">EN</button>
             </div>
         </div>
     </header>
@@ -95,8 +92,8 @@
             <!-- 1. ВВП -->
             <div class="raised-card rounded-xl p-5 flex flex-col justify-between items-center w-full">
                 <div class="text-center w-full">
-                    <span class="text-xs text-blue-400 uppercase font-bold tracking-wider">Валовой Внутренний Продукт</span>
-                    <div class="text-lg sm:text-xl ticker-font text-white mt-0.5">₸<span id="gdp-main-ticker">120,500,000,000,000.00</span></div>
+                    <span id="txt-gdp-title" class="text-xs text-blue-400 uppercase font-bold tracking-wider">Валовой Внутренний Продукт (2026)</span>
+                    <div class="text-lg sm:text-xl ticker-font text-white mt-0.5">₸<span id="gdp-main-ticker">122,478,915,000,000.00</span></div>
                 </div>
                 
                 <svg id="svg-gdp" viewBox="0 0 200 135" class="w-full max-h-[190px] my-1">
@@ -116,12 +113,11 @@
                     <path id="arc-red-gdp" fill="none" stroke="#ff1744" stroke-width="12" stroke-linecap="round" filter="url(#neonGlow)" />
                     <path id="arc-blue-gdp" fill="none" stroke="#0052ff" stroke-width="12" stroke-linecap="round" filter="url(#neonGlow)" />
                     <path id="arc-green-gdp" fill="none" stroke="#00c853" stroke-width="14" filter="url(#neonGlow)" />
-                    
                     <g id="ticks-gdp"></g>
 
                     <g id="lbl-group-gdp">
                         <text id="lbl-country-gdp" font-size="8" font-weight="800" text-anchor="middle" fill="#ffffff">КАЗАХСТАН</text>
-                        <text id="lbl-val-gdp" font-size="6.5" text-anchor="middle" fill="#00ffd0" font-weight="700">$360.46 млрд</text>
+                        <text id="lbl-val-gdp" font-size="6.5" text-anchor="middle" fill="#00ffd0" font-weight="700">$269.78B</text>
                     </g>
 
                     <circle id="pin-gdp" cx="100" cy="105" r="5" fill="#141923" stroke="#00c853" stroke-width="1.5" />
@@ -131,16 +127,16 @@
                 <input type="range" min="0" max="30" id="slider-gdp" class="vintage-slider">
 
                 <div class="raised-subblock-bright w-full mt-4 p-3 rounded-xl text-center">
-                    <span class="text-[11px] uppercase tracking-wider text-blue-300 font-bold block">ВВП на душу населения (2026)</span>
-                    <div class="text-base ticker-font text-white mt-0.5">$17 503 <span class="text-xs text-blue-200 font-sans font-medium">(₸<span id="gdp-per-capita-kzt">8,313,925</span>)</span></div>
+                    <span id="txt-gdp-capita-title" class="text-[11px] uppercase tracking-wider text-blue-300 font-bold block">ВВП на душу населения (2026)</span>
+                    <div class="text-base ticker-font text-white mt-0.5">$<span id="gdp-per-capita-usd">13,095</span> <span class="text-xs text-blue-200 font-sans font-medium">(₸<span id="gdp-per-capita-kzt">5,945,578</span>)</span></div>
                 </div>
             </div>
 
             <!-- 2. НАСЕЛЕНИЕ -->
             <div class="raised-card rounded-xl p-5 flex flex-col justify-between items-center w-full">
                 <div class="text-center w-full">
-                    <span class="text-xs text-yellow-400 uppercase font-bold tracking-wider">Численность населения (Real-Time)</span>
-                    <div class="text-lg sm:text-xl ticker-font text-white mt-0.5"><span id="pop-main-ticker">20 604 819</span></div>
+                    <span id="txt-pop-title" class="text-xs text-yellow-400 uppercase font-bold tracking-wider">Численность населения (Real-Time)</span>
+                    <div class="text-lg sm:text-xl ticker-font text-white mt-0.5"><span id="pop-main-ticker">20,604,819</span></div>
                 </div>
                 
                 <svg id="svg-pop" viewBox="0 0 200 135" class="w-full max-h-[190px] my-1">
@@ -150,7 +146,7 @@
                     <g id="ticks-pop"></g>
                     <g id="lbl-group-pop">
                         <text id="lbl-country-pop" font-size="8" font-weight="800" text-anchor="middle" fill="#ffffff">КАЗАХСТАН</text>
-                        <text id="lbl-val-pop" font-size="6.5" text-anchor="middle" fill="#ffd200" font-weight="700">20.60 млн</text>
+                        <text id="lbl-val-pop" font-size="6.5" text-anchor="middle" fill="#ffd200" font-weight="700">20.60M</text>
                     </g>
 
                     <circle id="pin-pop" cx="100" cy="105" r="5" fill="#121620" stroke="#3892e3" stroke-width="1.5" />
@@ -160,15 +156,15 @@
                 <input type="range" min="0" max="30" id="slider-pop" class="vintage-slider">
 
                 <div class="raised-subblock-bright w-full mt-4 p-3 rounded-xl text-center">
-                    <span class="text-[11px] uppercase tracking-wider text-amber-300 font-bold block">Временные мигранты / РВП</span>
-                    <div class="text-base ticker-font text-amber-300 mt-0.5"><span id="migrants-count">120 000</span> <span class="text-xs text-amber-100 font-sans font-medium">человек</span></div>
+                    <span id="txt-migrants-title" class="text-[11px] uppercase tracking-wider text-amber-300 font-bold block">Временные мигранты / РВП</span>
+                    <div class="text-base ticker-font text-amber-300 mt-0.5"><span id="migrants-count">120,000</span> <span id="txt-people-unit" class="text-xs text-amber-100 font-sans font-medium">чел.</span></div>
                 </div>
             </div>
 
             <!-- 3. ТЕМПЫ РОСТА -->
             <div class="raised-card rounded-xl p-5 flex flex-col justify-between items-center w-full">
                 <div class="text-center w-full">
-                    <span class="text-xs text-emerald-500 uppercase font-bold tracking-wider">Темпы экономического роста</span>
+                    <span id="txt-gro-title" class="text-xs text-emerald-500 uppercase font-bold tracking-wider">Темпы роста ВВП (Прогноз AERC)</span>
                     <div class="text-lg sm:text-xl ticker-font text-emerald-400 mt-0.5"><span id="gro-main-ticker">4.60</span>%</div>
                 </div>
                 
@@ -201,8 +197,8 @@
                 <input type="range" min="0" max="30" id="slider-gro" class="vintage-slider">
 
                 <div class="raised-subblock-bright w-full mt-4 p-3 rounded-xl text-center">
-                    <span class="text-[11px] uppercase tracking-wider text-emerald-300 font-bold block">Вклад 1 занятого в ВВП (в год)</span>
-                    <div class="text-base ticker-font text-emerald-400 mt-0.5">₸<span id="per-worker-kzt">12,819,271</span> <span class="text-xs text-emerald-200 font-sans font-medium">($<span id="per-worker-usd">27,000</span>)</span></div>
+                    <span id="txt-worker-title" class="text-[11px] uppercase tracking-wider text-emerald-300 font-bold block">1 Worker's Annual GDP Contribution</span>
+                    <div class="text-base ticker-font text-emerald-400 mt-0.5">₸<span id="per-worker-kzt">13,015,825</span> <span class="text-xs text-emerald-200 font-sans font-medium">($<span id="per-worker-usd">28,669</span>)</span></div>
                 </div>
             </div>
 
@@ -217,23 +213,23 @@
                     <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-rose-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Инфляция (годовая)</span>
-                                <span class="text-[10px] text-gray-400">Клик для деталей ↻</span>
+                                <span id="txt-inf-title" class="text-xs font-bold uppercase tracking-wider text-rose-500">Инфляция (Сентябрь 2026)</span>
+                                <span id="txt-click-details-1" class="text-[10px] text-gray-400">Клик для деталей ↻</span>
                             </div>
-                            <div class="text-3xl ticker-font text-rose-500 mt-1"><span id="inflation-main">8.40</span>%</div>
+                            <div class="text-3xl ticker-font text-rose-500 mt-1"><span id="inflation-main">9.30</span>%</div>
                         </div>
-                        <div class="text-[10px] text-gray-400 font-medium">Бюро национальной статистики РК</div>
+                        <div id="txt-inf-sub" class="text-[10px] text-gray-400 font-medium">Бюро национальной статистики РК</div>
                     </div>
                     <div class="flip-card-back raised-card p-4 flex flex-col justify-between border-l-4 border-rose-400 bg-[#1a131d]">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-rose-400 block mb-1">Структура инфляции</span>
+                            <span id="txt-inf-back-title" class="text-xs font-bold uppercase tracking-wider text-rose-400 block mb-1">Прогноз инфляции AERC</span>
                             <div class="space-y-1 text-xs">
-                                <div class="flex justify-between"><span class="text-gray-400">Продовольственная:</span> <span class="font-bold text-white" id="inflation-food">8.1%</span></div>
-                                <div class="flex justify-between"><span class="text-gray-400">Непродовольственная:</span> <span class="font-bold text-white" id="inflation-nonfood">8.6%</span></div>
-                                <div class="flex justify-between"><span class="text-gray-400">Платные услуги:</span> <span class="font-bold text-white" id="inflation-services">8.7%</span></div>
+                                <div class="flex justify-between"><span id="txt-inf-l1" class="text-gray-400">Оценка на 2026 год:</span> <span class="font-bold text-white">10.3%</span></div>
+                                <div class="flex justify-between"><span id="txt-inf-l2" class="text-gray-400">Прогноз на 2027 год:</span> <span class="font-bold text-emerald-400">8.9%</span></div>
+                                <div class="flex justify-between"><span id="txt-inf-l3" class="text-gray-400">Фактор:</span> <span id="txt-inf-v3" class="font-bold text-white">Жесткая ДКП</span></div>
                             </div>
                         </div>
-                        <span class="text-[9px] text-rose-300 italic">Нажмите, чтобы вернуться</span>
+                        <span id="txt-flip-back-1" class="text-[9px] text-rose-300 italic">Нажмите, чтобы вернуться</span>
                     </div>
                 </div>
             </div>
@@ -244,23 +240,23 @@
                     <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-amber-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs font-bold uppercase tracking-wider text-amber-500">Уровень безработицы (МОТ)</span>
-                                <span class="text-[10px] text-gray-400">Клик для деталей ↻</span>
+                                <span id="txt-unemp-title" class="text-xs font-bold uppercase tracking-wider text-amber-500">Уровень безработицы (МОТ)</span>
+                                <span id="txt-click-details-2" class="text-[10px] text-gray-400">Клик для деталей ↻</span>
                             </div>
                             <div class="text-3xl ticker-font text-amber-500 mt-1"><span id="unemployment-rate">4.70</span>%</div>
                         </div>
-                        <div class="text-[10px] text-gray-400 font-medium">Занятое население: <span id="employed-count">9 410 000</span> чел.</div>
+                        <div class="text-[10px] text-gray-400 font-medium"><span id="txt-emp-label">Занятое население:</span> <span id="employed-count">9,410,000</span></div>
                     </div>
                     <div class="flip-card-back raised-card p-4 flex flex-col justify-between border-l-4 border-amber-400 bg-[#1d1912]">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">Рынок труда РК</span>
+                            <span id="txt-unemp-back-title" class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">Рынок труда РК</span>
                             <div class="space-y-1 text-xs">
-                                <div class="flex justify-between"><span class="text-gray-400">Занятые:</span> <span class="font-bold text-white" id="employed-count-back">9 410 000</span></div>
-                                <div class="flex justify-between"><span class="text-gray-400">Безработные:</span> <span class="font-bold text-white" id="unemployed-count">461 000</span></div>
-                                <div class="flex justify-between"><span class="text-gray-400">Молодежная безработица:</span> <span class="font-bold text-white" id="youth-unemployment">3.1%</span></div>
+                                <div class="flex justify-between"><span id="txt-emp-l1" class="text-gray-400">Занятые:</span> <span class="font-bold text-white" id="employed-count-back">9,410,000</span></div>
+                                <div class="flex justify-between"><span id="txt-emp-l2" class="text-gray-400">Безработные:</span> <span class="font-bold text-white" id="unemployed-count">461,000</span></div>
+                                <div class="flex justify-between"><span id="txt-emp-l3" class="text-gray-400">Молодежная безработица:</span> <span class="font-bold text-white" id="youth-unemployment">3.1%</span></div>
                             </div>
                         </div>
-                        <span class="text-[9px] text-amber-300 italic">Нажмите, чтобы вернуться</span>
+                        <span id="txt-flip-back-2" class="text-[9px] text-amber-300 italic">Нажмите, чтобы вернуться</span>
                     </div>
                 </div>
             </div>
@@ -271,35 +267,35 @@
                     <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-emerald-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
-                                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Базовая ставка НБРК</span>
-                                <span class="text-[10px] text-gray-400">Клик для деталей ↻</span>
+                                <span id="txt-rate-title" class="text-xs font-bold uppercase tracking-wider text-emerald-400">Базовая ставка НБРК</span>
+                                <span id="txt-click-details-3" class="text-[10px] text-gray-400">Клик для деталей ↻</span>
                             </div>
-                            <div class="text-3xl ticker-font text-emerald-400 mt-1"><span id="base-rate">14.25</span></div>
+                            <div class="text-3xl ticker-font text-emerald-400 mt-1"><span id="base-rate">15.75</span>%</div>
                         </div>
-                        <div class="text-[10px] text-gray-400 font-medium">Коридор: +/- 1.00%</div>
+                        <div id="txt-rate-corridor" class="text-[10px] text-gray-400 font-medium">Процентный коридор: +/- 1.00%</div>
                     </div>
                     <div class="flip-card-back raised-card p-4 flex flex-col justify-between border-l-4 border-emerald-400 bg-[#111c16]">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">Индикаторы НБРК</span>
+                            <span id="txt-rate-back-title" class="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">Индикаторы НБРК & AERC</span>
                             <div class="space-y-1 text-xs">
-                                <div class="flex justify-between"><span class="text-amber-300 font-semibold">Курс USD/KZT:</span> <span class="font-bold text-amber-300">₸<span id="kzt-rate">475.00</span></span></div>
-                                <div class="flex justify-between"><span class="text-gray-400">Ставка TONIA (РЕПО):</span> <span class="font-bold text-white" id="tonia-rate">13.75%</span></div>
-                                <div class="flex justify-between"><span class="text-gray-400">Таргет по инфляции:</span> <span class="font-bold text-white">5.00%</span></div>
+                                <div class="flex justify-between"><span id="txt-fx-label" class="text-amber-300 font-semibold">Курс USD/KZT:</span> <span class="font-bold text-amber-300">₸<span id="kzt-rate">454.00</span></span></div>
+                                <div class="flex justify-between"><span id="txt-ca-label" class="text-gray-400">Счёт текущих опер.:</span> <span class="font-bold text-emerald-400">+0.8% ВВП</span></div>
+                                <div class="flex justify-between"><span id="txt-def-label" class="text-gray-400">Дефицит госбюджета:</span> <span class="font-bold text-rose-400">3.1% ВВП</span></div>
                             </div>
                         </div>
-                        <span class="text-[9px] text-emerald-300 italic">Нажмите, чтобы вернуться</span>
+                        <span id="txt-flip-back-3" class="text-[9px] text-emerald-300 italic">Нажмите, чтобы вернуться</span>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- РЯД 4: БЮДЖЕТНЫЕ ИНДИКАТОРЫ -->
+        <!-- РЯД 4: БЮДЖЕТНЫЕ РАСХОДЫ -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             <div class="raised-card rounded-xl px-4 pt-4 pb-3 flex flex-col items-center w-full">
                 <div class="text-center w-full mb-1">
-                    <span class="text-xs text-cyan-400 uppercase font-bold tracking-wider">Госрасходы на Здравоохранение</span>
+                    <span id="txt-hel-title" class="text-xs text-cyan-400 uppercase font-bold tracking-wider">Расходы на Здравоохранение</span>
                     <div class="text-lg sm:text-xl ticker-font text-white mt-0.5">₸<span id="health-main-ticker">968,027,000,000.00</span></div>
                 </div>
                 <svg id="svg-hel" viewBox="0 0 200 135" class="w-full max-h-[180px]">
@@ -324,7 +320,7 @@
 
             <div class="raised-card rounded-xl px-4 pt-4 pb-3 flex flex-col items-center w-full">
                 <div class="text-center w-full mb-1">
-                    <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Госрасходы на Образование</span>
+                    <span id="txt-edu-title" class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Расходы на Образование</span>
                     <div class="text-lg sm:text-xl ticker-font text-white mt-0.5">₸<span id="edu-main-ticker">453,193,000,000.00</span></div>
                 </div>
                 <svg id="svg-edu" viewBox="0 0 200 135" class="w-full max-h-[180px]">
@@ -349,7 +345,7 @@
 
             <div class="raised-card rounded-xl px-4 pt-4 pb-3 flex flex-col items-center w-full">
                 <div class="text-center w-full mb-1">
-                    <span class="text-xs text-red-500 uppercase font-bold tracking-wider">Госрасходы на Оборону</span>
+                    <span id="txt-def-title" class="text-xs text-red-500 uppercase font-bold tracking-wider">Расходы на Оборону</span>
                     <div class="text-lg sm:text-xl ticker-font text-white mt-0.5">₸<span id="def-main-ticker">808,070,000,000.00</span></div>
                 </div>
                 <svg id="svg-def" viewBox="0 0 200 135" class="w-full max-h-[180px]">
@@ -376,36 +372,128 @@
         <!-- НИЖНИЙ РЯД: СУВЕРЕННЫЕ ФИНАНСЫ -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="raised-card rounded-xl p-4 text-center sm:text-left">
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Активы Национального Фонда РК</span>
+                <span id="txt-nf-title" class="text-xs font-bold uppercase tracking-wider text-emerald-400">Активы Национального Фонда РК</span>
                 <div class="text-xl sm:text-2xl ticker-font text-emerald-400 mt-1">$<span id="nf-ticker">65,540,000,000.00</span></div>
-                <div class="text-xs text-gray-400 mt-0.5 font-medium">В валюте: ₸<span id="nf-kzt">31,131,500,000,000</span></div>
+                <div class="text-xs text-gray-400 mt-0.5 font-medium"><span id="txt-nf-kzt-label">В нацвалюте:</span> ₸<span id="nf-kzt">29,755,160,000,000</span></div>
             </div>
             <div class="raised-card rounded-xl p-4 flex flex-col justify-center text-center sm:text-left">
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Резервы Нацбанка (ЗВР)</span>
+                <span id="txt-zvr-title" class="text-xs font-bold uppercase tracking-wider text-emerald-400">Резервы Нацбанка (ЗВР)</span>
                 <div class="text-xl sm:text-2xl ticker-font text-emerald-500 mt-1">$<span id="zvr-ticker">67,600,000,000.00</span></div>
             </div>
             <div class="raised-card rounded-xl p-4 text-center sm:text-left">
-                <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Совокупный внешний и госдолг РК</span>
+                <span id="txt-debt-title" class="text-xs font-bold uppercase tracking-wider text-rose-500">Совокупный внешний и госдолг РК</span>
                 <div class="text-xl sm:text-2xl ticker-font text-rose-500 mt-1">$<span id="debt-ticker">182,400,000,000.00</span></div>
-                <div class="text-xs text-gray-400 mt-0.5 font-medium">В нацвалюте: ₸<span id="debt-kzt">86,640,000,000,000</span></div>
+                <div class="text-xs text-gray-400 mt-0.5 font-medium"><span id="txt-debt-kzt-label">В нацвалюте:</span> ₸<span id="debt-kzt">82,809,600,000,000</span></div>
             </div>
         </div>
     </main>
 
-    <!-- Скрипт Логики -->
+    <!-- ССКРИПТ ЛОГИКИ И ЯЗЫКОВ -->
     <script>
-        const dataGDP = [
+        let currentLang = localStorage.getItem('kz_clock_lang') || 'ru';
+
+        const translations = {
+            ru: {
+                pageTitle: "Часы экономики Казахстана | Economic Clock",
+                gdpTitle: "Валовой Внутренний Продукт (2026)",
+                gdpCapitaTitle: "ВВП на душу населения (2026)",
+                popTitle: "Численность населения (Real-Time)",
+                migrantsTitle: "Временные мигранты / РВП",
+                peopleUnit: "чел.",
+                groTitle: "Темпы роста ВВП (Прогноз AERC)",
+                workerTitle: "Годовая выработка 1 занятого",
+                infTitle: "Инфляция (Сентябрь 2026)",
+                infSub: "Бюро национальной статистики РК",
+                infBackTitle: "Прогноз инфляции AERC",
+                infL1: "Оценка на 2026 год:",
+                infL2: "Прогноз на 2027 год:",
+                infL3: "Фактор:",
+                infV3: "Жесткая ДКП",
+                unempTitle: "Уровень безработицы (МОТ)",
+                empLabel: "Занятое население:",
+                unempBackTitle: "Рынок труда РК",
+                empL1: "Занятые:",
+                empL2: "Безработные:",
+                empL3: "Молодежная безработица:",
+                rateTitle: "Базовая ставка НБРК",
+                rateCorridor: "Процентный коридор: +/- 1.00%",
+                rateBackTitle: "Индикаторы НБРК & AERC",
+                fxLabel: "Курс USD/KZT:",
+                caLabel: "Счёт текущих опер.:",
+                defLabel: "Дефицит госбюджета:",
+                clickDetails: "Клик для деталей ↻",
+                flipBack: "Нажмите, чтобы вернуться",
+                helTitle: "Расходы на Здравоохранение",
+                eduTitle: "Расходы на Образование",
+                defTitle: "Расходы на Оборону",
+                nfTitle: "Активы Национального Фонда РК",
+                zvrTitle: "Резервы Нацбанка (ЗВР)",
+                debtTitle: "Совокупный внешний и госдолг РК",
+                inKzt: "В нацвалюте:",
+                kazakhstan: "КАЗАХСТАН"
+            },
+            en: {
+                pageTitle: "The Kazakhstan Economic Clock | Dark Neumorphic Hub",
+                gdpTitle: "Gross Domestic Product (2026)",
+                gdpCapitaTitle: "GDP Per Capita (2026)",
+                popTitle: "Total Population (Real-Time)",
+                migrantsTitle: "Temporary Migrants / TRP",
+                peopleUnit: "people",
+                groTitle: "Economic Growth Rate (AERC)",
+                workerTitle: "1 Worker's Annual GDP Contribution",
+                infTitle: "Inflation Rate (Annual)",
+                infSub: "Bureau of National Statistics RK",
+                infBackTitle: "AERC Inflation Forecast",
+                infL1: "2026 Estimate:",
+                infL2: "2027 Forecast:",
+                infL3: "Key Factor:",
+                infV3: "Tight Monetary Policy",
+                unempTitle: "Unemployment Rate (ILO)",
+                empLabel: "Employed Population:",
+                unempBackTitle: "Labor Market RK",
+                empL1: "Employed:",
+                empL2: "Unemployed:",
+                empL3: "Youth Unemployment:",
+                rateTitle: "NBRK Base Rate",
+                rateCorridor: "Interest Corridor: +/- 1.00%",
+                rateBackTitle: "NBRK & AERC Indicators",
+                fxLabel: "USD/KZT FX Rate:",
+                caLabel: "Current Account (2026):",
+                defLabel: "Budget Deficit (2026):",
+                clickDetails: "Click for details ↻",
+                flipBack: "Click to flip back",
+                helTitle: "Healthcare Expenditure",
+                eduTitle: "Education Expenditure",
+                defTitle: "Defense Expenditure",
+                nfTitle: "National Fund Assets (NFRK)",
+                zvrTitle: "NBRK Reserves (FX & Gold)",
+                debtTitle: "Total External & Public Debt",
+                inKzt: "In KZT:",
+                kazakhstan: "KAZAKHSTAN"
+            }
+        };
+
+        const dataGDP_RU = [
             {c:"Либерия", v:"$5.64 млрд"}, {c:"Таджикистан", v:"$12.1 млрд"}, {c:"Исландия", v:"$31.0 млрд"}, {c:"Сербия", v:"$75.2 млрд"}, {c:"Словения", v:"$86.73 млрд"}, 
             {c:"Марокко", v:"$140.5 млрд"}, {c:"Узбекистан", v:"$160.2 млрд"}, {c:"Новая Зеландия", v:"$255.4 млрд"}, {c:"Финляндия", v:"$305.1 млрд"}, {c:"Колумбия", v:"$340.2 млрд"}, 
-            {c:"КАЗАХСТАН", v:"$360.46 млрд"}, {c:"ЮАР", v:"$400.5 млрд"}, {c:"ОАЭ", v:"$510.2 млрд"}, {c:"Аргентина", v:"$688.38 млрд"}, {c:"Швейцария", v:"$900.5 млрд"}, 
+            {c:"КАЗАХСТАН", v:"$269.78 млрд"}, {c:"ЮАР", v:"$400.5 млрд"}, {c:"ОАЭ", v:"$510.2 млрд"}, {c:"Аргентина", v:"$688.38 млрд"}, {c:"Швейцария", v:"$900.5 млрд"}, 
             {c:"Нидерланды", v:"$1.16 трлн"}, {c:"Саудовская Аравия", v:"$1.20 трлн"}, {c:"Испания", v:"$1.60 трлн"}, {c:"Южная Корея", v:"$1.80 трлн"}, {c:"Италия", v:"$2.10 трлн"}, 
             {c:"Бразилия", v:"$2.30 трлн"}, {c:"Канада", v:"$2.51 трлн"}, {c:"Франция", v:"$3.10 трлн"}, {c:"Великобритания", v:"$3.50 трлн"}, {c:"Индия", v:"$4.10 трлн"}, 
             {c:"Япония", v:"$4.20 трлн"}, {c:"Германия", v:"$4.70 трлн"}, {c:"Турция", v:"$5.10 трлн"}, {c:"ЕС", v:"$18.50 трлн"}, {c:"Китай", v:"$20.85 трлн"}, 
             {c:"США", v:"$32.38 трлн"}
         ];
+        const dataGDP_EN = [
+            {c:"Liberia", v:"$5.64B"}, {c:"Tajikistan", v:"$12.1B"}, {c:"Iceland", v:"$31.0B"}, {c:"Serbia", v:"$75.2B"}, {c:"Slovenia", v:"$86.73B"}, 
+            {c:"Morocco", v:"$140.5B"}, {c:"Uzbekistan", v:"$160.2B"}, {c:"New Zealand", v:"$255.4B"}, {c:"Finland", v:"$305.1B"}, {c:"Colombia", v:"$340.2B"}, 
+            {c:"KAZAKHSTAN", v:"$269.78B"}, {c:"South Africa", v:"$400.5B"}, {c:"UAE", v:"$510.2B"}, {c:"Argentina", v:"$688.38B"}, {c:"Switzerland", v:"$900.5B"}, 
+            {c:"Netherlands", v:"$1.16T"}, {c:"Saudi Arabia", v:"$1.20T"}, {c:"Spain", v:"$1.60T"}, {c:"South Korea", v:"$1.80T"}, {c:"Italy", v:"$2.10T"}, 
+            {c:"Brazil", v:"$2.30T"}, {c:"Canada", v:"$2.51T"}, {c:"France", v:"$3.10T"}, {c:"United Kingdom", v:"$3.50T"}, {c:"India", v:"$4.10T"}, 
+            {c:"Japan", v:"$4.20T"}, {c:"Germany", v:"$4.70T"}, {c:"Turkey", v:"$5.10T"}, {c:"EU", v:"$18.50T"}, {c:"China", v:"$20.85T"}, 
+            {c:"USA", v:"$32.38T"}
+        ];
         const kazIndexGDP = 10;
 
-        const dataPop = [
+        const dataPop_RU = [
             {c:"Исландия", v:"0.38 млн"}, {c:"Эстония", v:"1.33 млн"}, {c:"Литва", v:"2.8 млн"}, {c:"Грузия", v:"3.7 млн"}, {c:"Хорватия", v:"3.8 млн"}, 
             {c:"Новая Зеландия", v:"5.2 млн"}, {c:"Финляндия", v:"5.5 млн"}, {c:"Сингапур", v:"5.6 млн"}, {c:"Швейцария", v:"8.8 млн"}, {c:"ОАЭ", v:"9.4 млн"}, 
             {c:"Швеция", v:"10.5 млн"}, {c:"Чили", v:"19.9 млн"}, {c:"КАЗАХСТАН", v:"20.60 млн"}, {c:"Австралия", v:"26.5 млн"}, {c:"Малайзия", v:"34.3 млн"}, 
@@ -414,9 +502,18 @@
             {c:"Бразилия", v:"217.0 млн"}, {c:"Индонезия", v:"279.0 млн"}, {c:"США", v:"341.0 млн"}, {c:"Китай", v:"1.41 млрд"}, {c:"Индия", v:"1.44 млрд"}, 
             {c:"Мир", v:"8.1 млрд"}
         ];
+        const dataPop_EN = [
+            {c:"Iceland", v:"0.38M"}, {c:"Estonia", v:"1.33M"}, {c:"Lithuania", v:"2.8M"}, {c:"Georgia", v:"3.7M"}, {c:"Croatia", v:"3.8M"}, 
+            {c:"New Zealand", v:"5.2M"}, {c:"Finland", v:"5.5M"}, {c:"Singapore", v:"5.6M"}, {c:"Switzerland", v:"8.8M"}, {c:"UAE", v:"9.4M"}, 
+            {c:"Sweden", v:"10.5M"}, {c:"Chile", v:"19.9M"}, {c:"KAZAKHSTAN", v:"20.60M"}, {c:"Australia", v:"26.5M"}, {c:"Malaysia", v:"34.3M"}, 
+            {c:"Canada", v:"40.5M"}, {c:"Argentina", v:"46.6M"}, {c:"South Korea", v:"51.5M"}, {c:"Colombia", v:"52.0M"}, {c:"Italy", v:"58.8M"}, 
+            {c:"United Kingdom", v:"68.3M"}, {c:"France", v:"68.4M"}, {c:"Germany", v:"84.4M"}, {c:"Egypt", v:"114.5M"}, {c:"Japan", v:"123.0M"}, 
+            {c:"Brazil", v:"217.0M"}, {c:"Indonesia", v:"279.0M"}, {c:"USA", v:"341.0M"}, {c:"China", v:"1.41B"}, {c:"India", v:"1.44B"}, 
+            {c:"World", v:"8.1B"}
+        ];
         const kazIndexPop = 12;
 
-        const dataGro = [
+        const dataGro_RU = [
             {c:"Экв. Гвинея", v:"-4.5%"}, {c:"Пуэрто-Рико", v:"-1.2%"}, {c:"Аргентина", v:"-0.5%"}, {c:"Эстония", v:"0.4%"}, {c:"Германия", v:"0.9%"}, 
             {c:"Италия", v:"1.1%"}, {c:"Великобритания", v:"1.3%"}, {c:"Япония", v:"1.4%"}, {c:"Франция", v:"1.5%"}, {c:"США", v:"1.9%"}, 
             {c:"Южная Корея", v:"2.2%"}, {c:"Канада", v:"2.4%"}, {c:"Бразилия", v:"2.6%"}, {c:"Мексика", v:"3.0%"}, {c:"Турция", v:"3.5%"}, 
@@ -425,27 +522,52 @@
             {c:"Руанда", v:"7.3%"}, {c:"Сенегал", v:"8.0%"}, {c:"Нигер", v:"10.5%"}, {c:"Ливия", v:"13.0%"}, {c:"Макао", v:"15.5%"}, 
             {c:"Гайана", v:"34.3%"}
         ];
+        const dataGro_EN = [
+            {c:"Eq. Guinea", v:"-4.5%"}, {c:"Puerto Rico", v:"-1.2%"}, {c:"Argentina", v:"-0.5%"}, {c:"Estonia", v:"0.4%"}, {c:"Germany", v:"0.9%"}, 
+            {c:"Italy", v:"1.1%"}, {c:"United Kingdom", v:"1.3%"}, {c:"Japan", v:"1.4%"}, {c:"France", v:"1.5%"}, {c:"USA", v:"1.9%"}, 
+            {c:"South Korea", v:"2.2%"}, {c:"Canada", v:"2.4%"}, {c:"Brazil", v:"2.6%"}, {c:"Mexico", v:"3.0%"}, {c:"Turkey", v:"3.5%"}, 
+            {c:"KAZAKHSTAN", v:"4.6%"}, {c:"China", v:"4.8%"}, {c:"UAE", v:"5.0%"}, {c:"Malaysia", v:"5.2%"}, {c:"Indonesia", v:"5.4%"}, 
+            {c:"Vietnam", v:"5.8%"}, {c:"Philippines", v:"6.1%"}, {c:"India", v:"6.5%"}, {c:"Ivory Coast", v:"6.8%"}, {c:"Ethiopia", v:"7.0%"}, 
+            {c:"Rwanda", v:"7.3%"}, {c:"Senegal", v:"8.0%"}, {c:"Niger", v:"10.5%"}, {c:"Libya", v:"13.0%"}, {c:"Macau", v:"15.5%"}, 
+            {c:"Guyana", v:"34.3%"}
+        ];
         const kazIndexGro = 15;
 
-        const dataHel = [
+        const dataHel_RU = [
             {c:"Индия", v:"1.30%"}, {c:"КАЗАХСТАН", v:"1.38%"}, {c:"Китай", v:"3.20%"}, {c:"Россия", v:"3.50%"}, 
             {c:"Швейцария", v:"4.50%"}, {c:"Южная Корея", v:"4.80%"}, {c:"Новая Зеландия", v:"8.00%"}, {c:"Япония", v:"8.80%"}, 
             {c:"Европа (сред.)", v:"9.20%"}, {c:"США", v:"9.50%"}, {c:"Великобритания", v:"9.80%"}, {c:"Дания", v:"10.10%"}, {c:"Норвегия", v:"10.50%"}
         ];
+        const dataHel_EN = [
+            {c:"India", v:"1.30%"}, {c:"KAZAKHSTAN", v:"1.38%"}, {c:"China", v:"3.20%"}, {c:"Russia", v:"3.50%"}, 
+            {c:"Switzerland", v:"4.50%"}, {c:"South Korea", v:"4.80%"}, {c:"New Zealand", v:"8.00%"}, {c:"Japan", v:"8.80%"}, 
+            {c:"Europe (avg)", v:"9.20%"}, {c:"USA", v:"9.50%"}, {c:"United Kingdom", v:"9.80%"}, {c:"Denmark", v:"10.10%"}, {c:"Norway", v:"10.50%"}
+        ];
         const kazIndexHel = 1;
 
-        const dataEdu = [
+        const dataEdu_RU = [
             {c:"Индия", v:"0.82%"}, {c:"КАЗАХСТАН", v:"0.90%"}, {c:"Япония", v:"3.60%"}, {c:"Россия", v:"3.80%"}, 
             {c:"Китай", v:"4.00%"}, {c:"Швейцария", v:"4.80%"}, {c:"Южная Корея", v:"4.90%"}, {c:"Европа (сред.)", v:"5.00%"}, 
             {c:"США", v:"5.20%"}, {c:"Великобритания", v:"5.40%"}, {c:"Новая Зеландия", v:"5.60%"}, {c:"Дания", v:"6.80%"}, {c:"Норвегия", v:"7.10%"}
         ];
+        const dataEdu_EN = [
+            {c:"India", v:"0.82%"}, {c:"KAZAKHSTAN", v:"0.90%"}, {c:"Japan", v:"3.60%"}, {c:"Russia", v:"3.80%"}, 
+            {c:"China", v:"4.00%"}, {c:"Switzerland", v:"4.80%"}, {c:"South Korea", v:"4.90%"}, {c:"Europe (avg)", v:"5.00%"}, 
+            {c:"USA", v:"5.20%"}, {c:"United Kingdom", v:"5.40%"}, {c:"New Zealand", v:"5.60%"}, {c:"Denmark", v:"6.80%"}, {c:"Norway", v:"7.10%"}
+        ];
         const kazIndexEdu = 1;
 
-        const dataDef = [
+        const dataDef_RU = [
             {c:"КАЗАХСТАН", v:"0.64%"}, {c:"Швейцария", v:"0.80%"}, {c:"Новая Зеландия", v:"0.95%"}, {c:"Япония", v:"1.00%"}, 
             {c:"Нидерланды", v:"2.05%"}, {c:"Великобритания", v:"2.30%"}, {c:"Индия", v:"2.40%"}, {c:"Пакистан", v:"2.50%"}, 
             {c:"Иран", v:"3.00%"}, {c:"Литва/Эстония", v:"3.20%"}, {c:"США", v:"3.45%"}, {c:"Польша", v:"4.70%"}, 
             {c:"Израиль", v:"7.50%"}, {c:"Украина (ВПК)", v:"38.00%"}
+        ];
+        const dataDef_EN = [
+            {c:"KAZAKHSTAN", v:"0.64%"}, {c:"Switzerland", v:"0.80%"}, {c:"New Zealand", v:"0.95%"}, {c:"Japan", v:"1.00%"}, 
+            {c:"Netherlands", v:"2.05%"}, {c:"United Kingdom", v:"2.30%"}, {c:"India", v:"2.40%"}, {c:"Pakistan", v:"2.50%"}, 
+            {c:"Iran", v:"3.00%"}, {c:"Lithuania/Estonia", v:"3.20%"}, {c:"USA", v:"3.45%"}, {c:"Poland", v:"4.70%"}, 
+            {c:"Israel", v:"7.50%"}, {c:"Ukraine (MIC)", v:"38.00%"}
         ];
         const kazIndexDef = 0;
 
@@ -454,7 +576,6 @@
             return { x: 100 + radius * Math.cos(rad), y: 105 - radius * Math.sin(rad) };
         }
 
-        // --- ДИНАМИЧЕСКИЙ АЛГОРИТМ НАСЕЛЕНИЯ (ОБНОВЛЕНО НА 01.09.2026) ---
         const BASE_DATE = new Date("2026-09-01T00:00:00+05:00").getTime();
         const BASE_POPULATION = 20604819; 
         const SECONDS_PER_CAPITA = 376.44; 
@@ -465,7 +586,87 @@
             return elapsedSeconds >= 0 ? BASE_POPULATION + (elapsedSeconds / SECONDS_PER_CAPITA) : BASE_POPULATION;
         }
 
-        function initGauge(id, data, kazIndex) {
+        function switchLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('kz_clock_lang', lang);
+
+            const btnRu = document.getElementById('btn-lang-ru');
+            const btnEn = document.getElementById('btn-lang-en');
+
+            if (lang === 'ru') {
+                btnRu.className = "text-amber-400 font-extrabold cursor-default";
+                btnEn.className = "text-gray-400 hover:text-white cursor-pointer";
+                document.documentElement.lang = 'ru';
+            } else {
+                btnEn.className = "text-amber-400 font-extrabold cursor-default";
+                btnRu.className = "text-gray-400 hover:text-white cursor-pointer";
+                document.documentElement.lang = 'en';
+            }
+
+            const t = translations[lang];
+
+            document.getElementById('page-title').innerText = t.pageTitle;
+            document.getElementById('txt-gdp-title').innerText = t.gdpTitle;
+            document.getElementById('txt-gdp-capita-title').innerText = t.gdpCapitaTitle;
+            document.getElementById('txt-pop-title').innerText = t.popTitle;
+            document.getElementById('txt-migrants-title').innerText = t.migrantsTitle;
+            document.getElementById('txt-people-unit').innerText = t.peopleUnit;
+            document.getElementById('txt-gro-title').innerText = t.groTitle;
+            document.getElementById('txt-worker-title').innerText = t.workerTitle;
+            
+            document.getElementById('txt-inf-title').innerText = t.infTitle;
+            document.getElementById('txt-inf-sub').innerText = t.infSub;
+            document.getElementById('txt-inf-back-title').innerText = t.infBackTitle;
+            document.getElementById('txt-inf-l1').innerText = t.infL1;
+            document.getElementById('txt-inf-l2').innerText = t.infL2;
+            document.getElementById('txt-inf-l3').innerText = t.infL3;
+            document.getElementById('txt-inf-v3').innerText = t.infV3;
+
+            document.getElementById('txt-unemp-title').innerText = t.unempTitle;
+            document.getElementById('txt-emp-label').innerText = t.empLabel;
+            document.getElementById('txt-unemp-back-title').innerText = t.unempBackTitle;
+            document.getElementById('txt-emp-l1').innerText = t.empL1;
+            document.getElementById('txt-emp-l2').innerText = t.empL2;
+            document.getElementById('txt-emp-l3').innerText = t.empL3;
+
+            document.getElementById('txt-rate-title').innerText = t.rateTitle;
+            document.getElementById('txt-rate-corridor').innerText = t.rateCorridor;
+            document.getElementById('txt-rate-back-title').innerText = t.rateBackTitle;
+            document.getElementById('txt-fx-label').innerText = t.fxLabel;
+            document.getElementById('txt-ca-label').innerText = t.caLabel;
+            document.getElementById('txt-def-label').innerText = t.defLabel;
+
+            document.getElementById('txt-click-details-1').innerText = t.clickDetails;
+            document.getElementById('txt-click-details-2').innerText = t.clickDetails;
+            document.getElementById('txt-click-details-3').innerText = t.clickDetails;
+
+            document.getElementById('txt-flip-back-1').innerText = t.flipBack;
+            document.getElementById('txt-flip-back-2').innerText = t.flipBack;
+            document.getElementById('txt-flip-back-3').innerText = t.flipBack;
+
+            document.getElementById('txt-hel-title').innerText = t.helTitle;
+            document.getElementById('txt-edu-title').innerText = t.eduTitle;
+            document.getElementById('txt-def-title').innerText = t.defTitle;
+
+            document.getElementById('txt-nf-title').innerText = t.nfTitle;
+            document.getElementById('txt-zvr-title').innerText = t.zvrTitle;
+            document.getElementById('txt-debt-title').innerText = t.debtTitle;
+            document.getElementById('txt-nf-kzt-label').innerText = t.inKzt;
+            document.getElementById('txt-debt-kzt-label').innerText = t.inKzt;
+
+            updateAllGauges();
+        }
+
+        function getActiveData(type) {
+            if (type === 'gdp') return currentLang === 'ru' ? dataGDP_RU : dataGDP_EN;
+            if (type === 'pop') return currentLang === 'ru' ? dataPop_RU : dataPop_EN;
+            if (type === 'gro') return currentLang === 'ru' ? dataGro_RU : dataGro_EN;
+            if (type === 'hel') return currentLang === 'ru' ? dataHel_RU : dataHel_EN;
+            if (type === 'edu') return currentLang === 'ru' ? dataEdu_RU : dataEdu_EN;
+            if (type === 'def') return currentLang === 'ru' ? dataDef_RU : dataDef_EN;
+        }
+
+        function initGauge(id, kazIndex) {
             const kazAngleDeg = 180 - (kazIndex * 6);
             
             const startRed = calcCoords(180, 70);
@@ -481,12 +682,13 @@
             document.getElementById('arc-green-' + id).setAttribute('d', `M ${startGreen.x} ${startGreen.y} A 70 70 0 0 1 ${endGreen.x} ${endGreen.y}`);
 
             const slider = document.getElementById(`slider-${id}`);
-            slider.addEventListener('input', (e) => updateGauge(id, parseInt(e.target.value), data, kazIndex));
+            slider.addEventListener('input', (e) => updateGauge(id, parseInt(e.target.value), kazIndex));
             
-            updateGauge(id, kazIndex, data, kazIndex);
+            updateGauge(id, kazIndex, kazIndex);
         }
 
-        function updateGauge(id, val, data, kazIndex) {
+        function updateGauge(id, val, kazIndex) {
+            const data = getActiveData(id);
             const angleDeg = 180 - (val * 6);
             const rotateAngle = -90 + (val * 6);
             
@@ -550,18 +752,20 @@
             document.getElementById(`ticks-${id}`).innerHTML = ticksHTML;
         }
 
-        function initBudgetGauge(id, data, kazIndex, activeColor) {
+        function initBudgetGauge(id, kazIndex, activeColor) {
+            const data = getActiveData(id);
             const totalItems = data.length - 1;
             const stepDeg = 180 / totalItems;
             
             const slider = document.getElementById(`slider-${id}`);
             slider.max = totalItems;
-            slider.addEventListener('input', (e) => updateBudgetGauge(id, parseInt(e.target.value), data, kazIndex, stepDeg, activeColor));
+            slider.addEventListener('input', (e) => updateBudgetGauge(id, parseInt(e.target.value), kazIndex, stepDeg, activeColor));
             
-            updateBudgetGauge(id, kazIndex, data, kazIndex, stepDeg, activeColor);
+            updateBudgetGauge(id, kazIndex, kazIndex, stepDeg, activeColor);
         }
 
-        function updateBudgetGauge(id, val, data, kazIndex, stepDeg, activeColor) {
+        function updateBudgetGauge(id, val, kazIndex, stepDeg, activeColor) {
+            const data = getActiveData(id);
             const angleDeg = 180 - (val * stepDeg);
             const rotateAngle = -90 + (val * stepDeg);
             
@@ -616,12 +820,21 @@
             document.getElementById(`ticks-${id}`).innerHTML = ticksHTML;
         }
 
-        // --- ДИНАМИЧЕСКИЕ РАСЧЕТЫ С КУРСОМ USD/KZT ---
-        let fxRate = 475.00; 
-        const gdpPerCapitaUsd = 17503; 
+        function updateAllGauges() {
+            updateGauge('gdp', parseInt(document.getElementById('slider-gdp').value), kazIndexGDP);
+            updateGauge('pop', parseInt(document.getElementById('slider-pop').value), kazIndexPop);
+            updateGauge('gro', parseInt(document.getElementById('slider-gro').value), kazIndexGro);
+            
+            updateBudgetGauge('hel', parseInt(document.getElementById('slider-hel').value), kazIndexHel, 180 / (dataHel_RU.length - 1), '#00d5ff');
+            updateBudgetGauge('edu', parseInt(document.getElementById('slider-edu').value), kazIndexEdu, 180 / (dataEdu_RU.length - 1), '#00c853');
+            updateBudgetGauge('def', parseInt(document.getElementById('slider-def').value), kazIndexDef, 180 / (dataDef_RU.length - 1), '#ff3355');
+        }
+
+        // --- МАКРОПОКАЗАТЕЛИ НОЯБРЬ 2026 ---
+        let fxRate = 454.00; 
         let employedPopulation = 9410000; 
         
-        let gdpKzt = 120500000000000.00; 
+        let gdpKzt = 122478915000000.00; 
         let growthRate = 4.600000;
 
         let natFundUsd = 65540000000.00; 
@@ -632,9 +845,9 @@
         let eduKzt = 453193000000.00;
         let defKzt = 808070000000.00;
 
-        const gdpSpeedKzt = 380000.00; 
+        const gdpSpeedKzt = 455289.50; 
         const groSpeed = 0.000001; 
-        const nfSpeedUsd = 18.50;      
+        const nfSpeedUsd = 18.50;       
         const debtSpeedUsd = 42.10;    
         const zvrSpeedUsd = 5.30;      
 
@@ -649,31 +862,37 @@
                 const data = await response.json();
 
                 if (data.usd_kzt) fxRate = parseFloat(data.usd_kzt);
+                if (data.gdp_start_kzt && gdpKzt === 122478915000000.00) gdpKzt = parseFloat(data.gdp_start_kzt);
                 if (data.inflation_main) document.getElementById('inflation-main').innerText = data.inflation_main;
-                if (data.inflation_food) document.getElementById('inflation-food').innerText = data.inflation_food;
-                if (data.inflation_nonfood) document.getElementById('inflation-nonfood').innerText = data.inflation_nonfood;
-                if (data.inflation_services) document.getElementById('inflation-services').innerText = data.inflation_services;
+                if (data.gdp_growth) {
+                    growthRate = parseFloat(data.gdp_growth);
+                    document.getElementById('gro-main-ticker').innerText = growthRate.toFixed(2);
+                }
                 
                 if (data.unemployment_rate) document.getElementById('unemployment-rate').innerText = data.unemployment_rate;
                 if (data.employed_count) {
                     employedPopulation = parseInt(data.employed_count);
-                    document.getElementById('employed-count').innerText = employedPopulation.toLocaleString('ru-RU');
-                    document.getElementById('employed-count-back').innerText = employedPopulation.toLocaleString('ru-RU');
+                    const locale = currentLang === 'ru' ? 'ru-RU' : 'en-US';
+                    document.getElementById('employed-count').innerText = employedPopulation.toLocaleString(locale);
+                    document.getElementById('employed-count-back').innerText = employedPopulation.toLocaleString(locale);
                 }
-                if (data.unemployed_count) document.getElementById('unemployed-count').innerText = parseInt(data.unemployed_count).toLocaleString('ru-RU');
+                if (data.unemployed_count) {
+                    const locale = currentLang === 'ru' ? 'ru-RU' : 'en-US';
+                    document.getElementById('unemployed-count').innerText = parseInt(data.unemployed_count).toLocaleString(locale);
+                }
                 if (data.youth_unemployment) document.getElementById('youth-unemployment').innerText = data.youth_unemployment;
 
                 if (data.base_rate) document.getElementById('base-rate').innerText = data.base_rate;
                 if (data.usd_kzt) document.getElementById('kzt-rate').innerText = data.usd_kzt;
-                if (data.tonia_rate) document.getElementById('tonia-rate').innerText = data.tonia_rate;
 
             } catch (err) {
-                console.log("Локальный или автономный режим: используем встроенные показатели");
+                console.log("Автономный режим: задействованы встроенные обновленные данные");
             }
         }
 
         setInterval(() => {
             const currentPop = getRealtimePopulation();
+            const locale = currentLang === 'ru' ? 'ru-RU' : 'en-US';
             
             gdpKzt += gdpSpeedKzt * 0.1;
             growthRate += groSpeed * 0.1;
@@ -688,45 +907,54 @@
             eduKzt += eduSpeedKzt * 0.1;
             defKzt += defSpeedKzt * 0.1;
 
-            const gdpPerCapitaKzt = gdpPerCapitaUsd * fxRate;
+            const gdpUsdTotal = gdpKzt / fxRate;
+            const gdpPerCapitaKzt = gdpKzt / currentPop;
+            const gdpPerCapitaUsd = gdpPerCapitaKzt / fxRate;
+            
             const perWorkerGdpKzt = gdpKzt / employedPopulation;
             const perWorkerGdpUsd = perWorkerGdpKzt / fxRate;
 
-            document.getElementById('gdp-main-ticker').innerText = gdpKzt.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById('pop-main-ticker').innerText = Math.floor(currentPop).toLocaleString('ru-RU');
-            document.getElementById('gro-main-ticker').innerText = growthRate.toFixed(2);
+            document.getElementById('gdp-main-ticker').innerText = gdpKzt.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('pop-main-ticker').innerText = Math.floor(currentPop).toLocaleString(locale);
             
-            document.getElementById('gdp-per-capita-kzt').innerText = Math.floor(gdpPerCapitaKzt).toLocaleString('ru-RU');
-            document.getElementById('per-worker-kzt').innerText = Math.floor(perWorkerGdpKzt).toLocaleString('ru-RU');
+            const gdpBillionUsd = (gdpUsdTotal / 1000000000).toFixed(2);
+            document.getElementById('lbl-val-gdp').textContent = currentLang === 'ru' ? `$${gdpBillionUsd} млрд` : `$${gdpBillionUsd}B`;
+
+            document.getElementById('gdp-per-capita-usd').innerText = Math.floor(gdpPerCapitaUsd).toLocaleString(locale);
+            document.getElementById('gdp-per-capita-kzt').innerText = Math.floor(gdpPerCapitaKzt).toLocaleString(locale);
+            
+            document.getElementById('per-worker-kzt').innerText = Math.floor(perWorkerGdpKzt).toLocaleString(locale);
             document.getElementById('per-worker-usd').innerText = Math.floor(perWorkerGdpUsd).toLocaleString('en-US');
 
             document.getElementById('nf-ticker').innerText = natFundUsd.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById('nf-kzt').innerText = Math.floor(natFundKzt).toLocaleString('ru-RU');
+            document.getElementById('nf-kzt').innerText = Math.floor(natFundKzt).toLocaleString(locale);
             document.getElementById('zvr-ticker').innerText = zvrUsd.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             document.getElementById('debt-ticker').innerText = totalDebtUsd.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById('debt-kzt').innerText = Math.floor(totalDebtKzt).toLocaleString('ru-RU');
+            document.getElementById('debt-kzt').innerText = Math.floor(totalDebtKzt).toLocaleString(locale);
 
-            document.getElementById('health-main-ticker').innerText = helKzt.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById('edu-main-ticker').innerText = eduKzt.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById('def-main-ticker').innerText = defKzt.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('health-main-ticker').innerText = helKzt.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('edu-main-ticker').innerText = eduKzt.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('def-main-ticker').innerText = defKzt.toLocaleString(locale, {minimumFractionDigits: 2, maximumFractionDigits: 2});
         }, 100);
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchLiveEconomicData();
             
-            initGauge('gdp', dataGDP, kazIndexGDP);
-            initGauge('pop', dataPop, kazIndexPop);
-            initGauge('gro', dataGro, kazIndexGro);
+            initGauge('gdp', kazIndexGDP);
+            initGauge('pop', kazIndexPop);
+            initGauge('gro', kazIndexGro);
             document.getElementById('slider-gdp').value = kazIndexGDP;
             document.getElementById('slider-pop').value = kazIndexPop;
             document.getElementById('slider-gro').value = kazIndexGro;
 
-            initBudgetGauge('hel', dataHel, kazIndexHel, '#00d5ff');
-            initBudgetGauge('edu', dataEdu, kazIndexEdu, '#00c853');
-            initBudgetGauge('def', dataDef, kazIndexDef, '#ff3355');
+            initBudgetGauge('hel', kazIndexHel, '#00d5ff');
+            initBudgetGauge('edu', kazIndexEdu, '#00c853');
+            initBudgetGauge('def', kazIndexDef, '#ff3355');
             document.getElementById('slider-hel').value = kazIndexHel;
             document.getElementById('slider-edu').value = kazIndexEdu;
             document.getElementById('slider-def').value = kazIndexDef;
+
+            switchLanguage(currentLang);
         });
     </script>
 </body>
