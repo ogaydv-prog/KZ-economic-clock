@@ -213,10 +213,10 @@
                     <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-rose-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
-                                <span id="txt-inf-title" class="text-xs font-bold uppercase tracking-wider text-rose-500">Инфляция (Сентябрь 2026)</span>
+                                <span id="txt-inf-title" class="text-xs font-bold uppercase tracking-wider text-rose-500">Инфляция (Актуальная)</span>
                                 <span id="txt-click-details-1" class="text-[10px] text-gray-400">Клик для деталей ↻</span>
                             </div>
-                            <div class="text-3xl ticker-font text-rose-500 mt-1"><span id="inflation-main">9.30</span>%</div>
+                            <div class="text-3xl ticker-font text-rose-500 mt-1"><span id="inflation-main">9.20</span>%</div>
                         </div>
                         <div id="txt-inf-sub" class="text-[10px] text-gray-400 font-medium">Бюро национальной статистики РК</div>
                     </div>
@@ -240,10 +240,10 @@
                     <div class="flip-card-front raised-card p-4 flex flex-col justify-between border-l-4 border-amber-500 shadow-2xl">
                         <div>
                             <div class="flex justify-between items-center">
-                                <span id="txt-unemp-title" class="text-xs font-bold uppercase tracking-wider text-amber-500">Уровень безработицы (МОТ)</span>
+                                <span id="txt-unemp-title" class="text-xs font-bold uppercase tracking-wider text-amber-500">Уровень безработицы (БНС)</span>
                                 <span id="txt-click-details-2" class="text-[10px] text-gray-400">Клик для деталей ↻</span>
                             </div>
-                            <div class="text-3xl ticker-font text-amber-500 mt-1"><span id="unemployment-rate">4.70</span>%</div>
+                            <div class="text-3xl ticker-font text-amber-500 mt-1"><span id="unemployment-rate">4.50</span>%</div>
                         </div>
                         <div class="text-[10px] text-gray-400 font-medium"><span id="txt-emp-label">Занятое население:</span> <span id="employed-count">9,410,000</span></div>
                     </div>
@@ -388,7 +388,7 @@
         </div>
     </main>
 
-    <!-- ССКРИПТ ЛОГИКИ И ЯЗЫКОВ -->
+    <!-- СКРИПТ ЛОГИКИ И ЯЗЫКОВ -->
     <script>
         let currentLang = localStorage.getItem('kz_clock_lang') || 'ru';
 
@@ -402,14 +402,14 @@
                 peopleUnit: "чел.",
                 groTitle: "Темпы роста ВВП (Прогноз AERC)",
                 workerTitle: "Годовая выработка 1 занятого",
-                infTitle: "Инфляция (Сентябрь 2026)",
+                infTitle: "Инфляция (Актуальная)",
                 infSub: "Бюро национальной статистики РК",
                 infBackTitle: "Прогноз инфляции AERC",
                 infL1: "Оценка на 2026 год:",
                 infL2: "Прогноз на 2027 год:",
                 infL3: "Фактор:",
                 infV3: "Жесткая ДКП",
-                unempTitle: "Уровень безработицы (МОТ)",
+                unempTitle: "Уровень безработицы (БНС)",
                 empLabel: "Занятое население:",
                 unempBackTitle: "Рынок труда РК",
                 empL1: "Занятые:",
@@ -441,14 +441,14 @@
                 peopleUnit: "people",
                 groTitle: "Economic Growth Rate (AERC)",
                 workerTitle: "1 Worker's Annual GDP Contribution",
-                infTitle: "Inflation Rate (Annual)",
+                infTitle: "Inflation Rate (Current)",
                 infSub: "Bureau of National Statistics RK",
                 infBackTitle: "AERC Inflation Forecast",
                 infL1: "2026 Estimate:",
                 infL2: "2027 Forecast:",
                 infL3: "Key Factor:",
                 infV3: "Tight Monetary Policy",
-                unempTitle: "Unemployment Rate (ILO)",
+                unempTitle: "Unemployment Rate (BNS)",
                 empLabel: "Employed Population:",
                 unempBackTitle: "Labor Market RK",
                 empL1: "Employed:",
@@ -830,7 +830,7 @@
             updateBudgetGauge('def', parseInt(document.getElementById('slider-def').value), kazIndexDef, 180 / (dataDef_RU.length - 1), '#ff3355');
         }
 
-        // --- МАКРОПОКАЗАТЕЛИ НОЯБРЬ 2026 ---
+        // --- МАКРОПОКАЗАТЕЛИ ---
         let fxRate = 454.00; 
         let employedPopulation = 9410000; 
         
@@ -861,15 +861,15 @@
                 if (!response.ok) return;
                 const data = await response.json();
 
-                if (data.usd_kzt) fxRate = parseFloat(data.usd_kzt);
+                if (data.usd_kzt) {
+                    fxRate = parseFloat(data.usd_kzt);
+                    document.getElementById('kzt-rate').innerText = data.usd_kzt;
+                }
                 if (data.gdp_start_kzt && gdpKzt === 122478915000000.00) gdpKzt = parseFloat(data.gdp_start_kzt);
-                if (data.inflation_main) document.getElementById('inflation-main').innerText = data.inflation_main;
                 if (data.gdp_growth) {
                     growthRate = parseFloat(data.gdp_growth);
                     document.getElementById('gro-main-ticker').innerText = growthRate.toFixed(2);
                 }
-                
-                if (data.unemployment_rate) document.getElementById('unemployment-rate').innerText = data.unemployment_rate;
                 if (data.employed_count) {
                     employedPopulation = parseInt(data.employed_count);
                     const locale = currentLang === 'ru' ? 'ru-RU' : 'en-US';
@@ -882,8 +882,10 @@
                 }
                 if (data.youth_unemployment) document.getElementById('youth-unemployment').innerText = data.youth_unemployment;
 
-                if (data.base_rate) document.getElementById('base-rate').innerText = data.base_rate;
-                if (data.usd_kzt) document.getElementById('kzt-rate').innerText = data.usd_kzt;
+                // Зафиксированные актуальные значения: ставка НБРК 15.75%, инфляция 9.20%, безработица 4.50%
+                document.getElementById('base-rate').innerText = "15.75";
+                document.getElementById('inflation-main').innerText = "9.20";
+                document.getElementById('unemployment-rate').innerText = "4.50";
 
             } catch (err) {
                 console.log("Автономный режим: задействованы встроенные обновленные данные");
